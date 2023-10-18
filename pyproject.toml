@@ -3,7 +3,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 [project]
 name = "yapomo"
-version = "1.0.21"
+version = "1.1.0"
 authors = [
     {name = "João Dias", email = "joao.alberto.ferreira.dias@gmail.com"},
 ]
