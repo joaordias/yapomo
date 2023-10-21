@@ -3,9 +3,9 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 [project]
 name = "yapomo"
-version = "1.1.0"
+version = "1.1.1"
 authors = [
-    {name = "João Dias", email = "joao.alberto.ferreira.dias@gmail.com"},
+    {name = "João Dias", email = "joaodias@users.sourceforge.net"},
 ]
 description = "yapomo - Yet Another Pomodoro Timer"
 readme = "README.md"
