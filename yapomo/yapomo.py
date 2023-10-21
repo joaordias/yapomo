@@ -27,7 +27,7 @@ class const():
     DURATION = 25 # minutes
     SIZE_RATIO = 1 / 9  # of screen width
 
-    # timer status text  
+    # timer status text
     START, STARTED, PAUSED = "Start", "Started", "Paused"
 
     UPDATE_RATE = 100 # miliseconds
@@ -123,7 +123,7 @@ class PomodoroTimer:
             text=const.START
          )
 
-        status_font = font.Font(family="TkTextFont", size=24)
+        status_font = font.Font(family="TkTextFont", size=12)
 
         canvas.itemconfigure(
             self.status_label,
@@ -226,12 +226,6 @@ class PomodoroTimer:
         self.counter = 0
         self.time_left = 60 * const.DURATION
 
-    def on_right_click(self, event=None):
-        self.popup_menu.tk_popup(event.x_root, event.y_root)
-
-    def on_escape(self, event=None):
-        self.popup_menu.unpost()
-
     def change_colors(self, fill="#FF0000", counter="#801010", flash="#FF0000"):
         const.FILL_COLOR = fill
         const.COUNTER_COLOR = counter
@@ -259,39 +253,41 @@ class PomodoroTimer:
 
 def main():
     root = Tk()
+
+    menu_bar = tk.Menu(root)
+    root["menu"] = menu_bar
     root.option_add("*tearOff", tk.FALSE)
+
+    menu_file = tk.Menu(menu_bar)
+    menu_bar.add_cascade(menu=menu_file, label="File")
+
+    menu_colors = tk.Menu(menu_bar)
+    menu_bar.add_cascade(menu=menu_colors, label="Colors")
+
+    menu_timer = tk.Menu(menu_bar)
+    menu_bar.add_cascade(menu=menu_timer, label="Timer")
 
     pt = PomodoroTimer(root)
 
-    popup_menu = tk.Menu(root)
-    colors_menu = tk.Menu(popup_menu)
-
-    popup_menu.add_cascade(
-        label="Colors", menu=colors_menu)
-    colors_menu.add_command(
+    menu_colors.add_command(
         label="Red", command=pt.on_red)
-    colors_menu.add_command(
+    menu_colors.add_command(
         label="Green", command=pt.on_green)
-    colors_menu.add_command(
+    menu_colors.add_command(
         label="Blue", command=pt.on_blue)
 
-    popup_menu.add_command(
+    menu_timer.add_command(
         label="Reset",
         command=pt.reset
     )
-    popup_menu.add_command(
+    menu_timer.add_command(
         label="Reset All",
         command=pt.reset_all
     )
-    popup_menu.add_command(
+    menu_file.add_command(
         label="Quit",
         command=root.destroy
     )
-
-    pt.popup_menu = popup_menu
-
-    root.bind("<3>", pt.on_right_click)
-    root.bind("<Escape>", pt.on_escape)
 
     root.mainloop()
 
