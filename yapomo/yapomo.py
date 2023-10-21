@@ -251,7 +251,7 @@ class PomodoroTimer:
         self.change_colors(fill="#FF0000", counter="#801010", flash="#FF0000")
 
     def on_blue(self, event=None):
-        self.change_colors(fill="#00FFFF", counter="#101080", flash="#00FFFF")
+        self.change_colors(fill="#00FFFF", counter="#107070", flash="#00FFFF")
 
     def on_green(self, event=None):
         self.change_colors(fill="#00FF00", counter="#108010", flash="#00FF00")
