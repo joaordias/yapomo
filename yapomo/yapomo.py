@@ -27,8 +27,8 @@ class const():
     DURATION = 25 # minutes
     SIZE_RATIO = 1 / 9  # of screen width
 
-    # unicode symbols
-    READY, STARTED, PAUSED = "\u23f5", "\u23f2", "\u23f8"
+    # timer status text  
+    START, STARTED, PAUSED = "Start", "Started", "Paused"
 
     UPDATE_RATE = 100 # miliseconds
     FILL_COLOR = "#00FF00"
@@ -43,7 +43,7 @@ class PomodoroTimer:
         self.adapt_size_to_screen(window)
         self.counter = 0
         self.time_left = const.DURATION * 60 # in seconds
-        self.state = "READY" # or "STARTED" or "PAUSED"
+        self.state = "START" # or "STARTED" or "PAUSED"
         self.setup_widgets(window)
         self.setup_ui_bindings()
         self.register_callback()
@@ -120,7 +120,7 @@ class PomodoroTimer:
         self.status_label = canvas.create_text(
             int(w / 2),
             int(h / 1.225),
-            text=const.READY
+            text=const.START
          )
 
         status_font = font.Font(family="TkTextFont", size=24)
@@ -137,7 +137,7 @@ class PomodoroTimer:
         self.canvas.bind("<Button-1>", self.next_state)
 
     def next_state(self, event=None):
-        if self.state == "READY":
+        if self.state == "START":
             self.start_time = time.time() # seconds since Unix epoch.
             self.state = "STARTED"
         elif self.state == "STARTED":
@@ -157,7 +157,7 @@ class PomodoroTimer:
                 self.current_time - self.start_time
             )
             if self.time_left < 0:
-                self.state = "READY"
+                self.state = "START"
                 self.time_left = const.DURATION * 60
                 self.counter += 1
                 flag = True
@@ -201,10 +201,10 @@ class PomodoroTimer:
             text=str(self.counter)
         )
 
-        if self.state == "READY":
+        if self.state == "START":
             self.canvas.itemconfigure(
                 self.status_label,
-                text=const.READY
+                text=const.START
             )
         elif self.state == "STARTED":
             self.canvas.itemconfigure(
@@ -218,11 +218,11 @@ class PomodoroTimer:
             )
 
     def reset(self):
-        self.state = "READY"
+        self.state = "START"
         self.time_left = 60 * const.DURATION
 
     def reset_all(self):
-        self.state = "READY"
+        self.state = "START"
         self.counter = 0
         self.time_left = 60 * const.DURATION
 
