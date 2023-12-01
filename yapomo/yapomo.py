@@ -164,6 +164,9 @@ class PomodoroTimer:
         self.update_widgets()
         if flag:
             flag = False
+            if self.window.state() != tk.NORMAL:
+                self.window.deiconify()
+                self.window.lift()
             self.flash_counter()
 
         self.canvas.after(const.UPDATE_RATE, self.on_update)
